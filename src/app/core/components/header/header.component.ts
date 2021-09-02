@@ -13,7 +13,17 @@ export class HeaderComponent implements OnInit {
     this.items = [
       {
         label: 'MV',
+        url: '/',
+      },
+      {
+        label: 'Profissional',
+        icon: 'pi pi-user',
+        url: '/profissionais',
+      },
+      {
+        label: 'Estabelecimento',
         icon: 'pi pi-home',
+        url: '/estabelecimentos',
       },
     ];
   }

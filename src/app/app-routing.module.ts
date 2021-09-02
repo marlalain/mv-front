@@ -7,6 +7,20 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
   },
+  {
+    path: 'profissionais',
+    loadChildren: () =>
+      import('./pages/profissional/profissional-routing.module').then(
+        (module) => module.ProfissionalRoutingModule
+      ),
+  },
+  {
+    path: 'estabelecimentos',
+    loadChildren: () =>
+      import('./pages/estabelecimento/estabelecimento-routing.module').then(
+        (module) => module.EstabelecimentoRoutingModule
+      ),
+  },
 ];
 
 @NgModule({
