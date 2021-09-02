@@ -1,1 +1,58 @@
-<p>list-estabelecimentos works!</p>
+<p-table
+  [value]="estabelecimentos"
+  [rowHover]="true"
+  [paginator]="true"
+  [totalRecords]="totalRecords"
+  [rows]="rows"
+  [loading]="loading"
+  [lazy]="true"
+  (onLazyLoad)="lazyLoadEstabelecimentos($event)"
+  dataKey="id"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome</th>
+      <th>Telefone</th>
+      <th>Endereço</th>
+      <th style="width: 12em">Ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-estabelecimento>
+    <tr>
+      <td>{{ estabelecimento.nome }}</td>
+      <td>{{ estabelecimento.telefone }}</td>
+      <td>
+        {{ estabelecimento.endereco.bairro }} /
+        {{ estabelecimento.endereco.rua }} /
+        {{ estabelecimento.endereco.numero }}
+      </td>
+      <td>
+        <button
+          pButton
+          icon="pi pi-search"
+          class="p-button-outlined p-button-text p-button-rounded"
+          alt="Ver"
+          (click)="viewEstabelecimento(estabelecimento)"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-pencil"
+          class="
+            p-button-outlined p-button-text p-button-success p-button-rounded
+          "
+          alt="Editar"
+          (click)="editEstabelecimento(estabelecimento)"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-trash"
+          class="
+            p-button-outlined p-button-text p-button-danger p-button-rounded
+          "
+          alt="Deletar"
+          (click)="deleteEstabelecimento(estabelecimento)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
