@@ -23,6 +23,10 @@ export class EstabelecimentoService {
     );
   }
 
+  public getEstabelecimentoById(id: number) {
+    return this.http.get(`${this.API_URL}/${id}`);
+  }
+
   public deleteEstabelecimento(estabelecimento: Estabelecimento) {
     return this.http.delete(this.unwrapLink(estabelecimento.links!, 'delete'));
   }

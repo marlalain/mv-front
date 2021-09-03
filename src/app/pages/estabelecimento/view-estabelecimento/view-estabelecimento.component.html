@@ -1,1 +1,85 @@
-<p>view-estabelecimento works!</p>
+<form class="px-8 py-1">
+  <div class="p-fluid">
+    <h4>Nome</h4>
+    <span class="p-input-icon-right">
+      <i *ngFor="loading" class="pi pi-spin pi-spinner"></i>
+      <input
+        type="text"
+        value="{{ estabelecimento.nome }}"
+        readonly
+        disabled
+        pInputText
+      />
+    </span>
+  </div>
+
+  <div class="p-fluid">
+    <h4>Telefone</h4>
+    <span class="p-input-icon-right">
+      <i *ngFor="loading" class="pi pi-spin pi-spinner"></i>
+      <input
+        type="text"
+        value="{{ estabelecimento.telefone }}"
+        readonly
+        disabled
+        pInputText
+      />
+    </span>
+  </div>
+
+  <div class="p-fluid">
+    <h4>Endereço</h4>
+    <div class="p-grid p-fluid">
+      <div class="my-2 p-inputgroup">
+        <span style="cursor: default" class="p-inputgroup-addon">Rua</span>
+        <input
+          type="text"
+          value="{{ estabelecimento.endereco?.rua }}"
+          readonly
+          disabled
+          pInputText
+        />
+      </div>
+      <div class="my-2 p-inputgroup">
+        <span style="cursor: default" class="p-inputgroup-addon">Bairro</span>
+        <input
+          type="text"
+          value="{{ estabelecimento.endereco?.bairro }}"
+          readonly
+          disabled
+          pInputText
+        />
+      </div>
+      <div class="my-2 p-inputgroup">
+        <span style="cursor: default" class="p-inputgroup-addon">Número</span>
+        <input
+          type="text"
+          value="{{ estabelecimento.endereco?.numero }}"
+          readonly
+          disabled
+          pInputText
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="p-fluid">
+    <h4>Profissionais</h4>
+    <p-listbox
+      [options]="estabelecimento.profissionais!"
+      [filter]="true"
+      [readonly]="true"
+      [disabled]="loading"
+      optionLabel="nome"
+    ></p-listbox>
+  </div>
+</form>
+
+<div class="mx-8 mt-4 p-fluid">
+  <button
+    pButton
+    type="button"
+    label="Go Back"
+    class="p-button-outlined"
+  ></button>
+</div>
