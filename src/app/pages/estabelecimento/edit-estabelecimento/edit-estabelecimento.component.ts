@@ -75,6 +75,7 @@ export class EditEstabelecimentoComponent implements OnInit {
           'Sucesso',
           'Estabelecimento editado com sucesso.'
         );
+        this.goBack();
       },
       (err) => {
         this.toastUtil.showError(err);
