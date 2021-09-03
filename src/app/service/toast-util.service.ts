@@ -28,4 +28,12 @@ export class ToastUtilService {
       detail: detail,
     });
   }
+
+  showSuccess(summary: string, detail: string) {
+    this.service.add({
+      severity: 'success',
+      summary: summary,
+      detail: detail,
+    });
+  }
 }

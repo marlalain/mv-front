@@ -27,7 +27,16 @@ export class EstabelecimentoService {
   }
 
   public deleteEstabelecimento(estabelecimento: Estabelecimento) {
+    // utilizando os links do HATEOAS
     return this.http.delete(this.unwrapLink(estabelecimento.links!, 'delete'));
+  }
+
+  public updateEstabelecimento(estabelecimento: Estabelecimento) {
+    // fazendo os requests normalmente
+    return this.http.put(
+      `${this.API_URL}/${estabelecimento.id}`,
+      estabelecimento
+    );
   }
 
   unwrapLink(links: Link[], rel: string): string {
