@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Page } from '../model/dto/page';
 import { Estabelecimento } from '../model/estabelecimento.model';
 import { Link } from '../model/hateoas/link';
-import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +18,7 @@ export class EstabelecimentoService {
     size?: number
   ): Observable<Page<Estabelecimento>> {
     return this.http.get<Page<Estabelecimento>>(
-      `${this.API_URL}?page=${page ? page : `0`}&size=${size ? size : `10`}`
+      `${this.API_URL}?page=${page ? page : `0`}&size=${size ? size : ''}`
     );
   }
 
