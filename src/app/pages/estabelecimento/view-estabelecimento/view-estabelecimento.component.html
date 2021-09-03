@@ -2,7 +2,7 @@
   <div class="p-fluid">
     <h4>Nome</h4>
     <span class="p-input-icon-right">
-      <i *ngFor="loading" class="pi pi-spin pi-spinner"></i>
+      <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
       <input
         type="text"
         value="{{ estabelecimento.nome }}"
@@ -16,7 +16,7 @@
   <div class="p-fluid">
     <h4>Telefone</h4>
     <span class="p-input-icon-right">
-      <i *ngFor="loading" class="pi pi-spin pi-spinner"></i>
+      <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
       <input
         type="text"
         value="{{ estabelecimento.telefone }}"
