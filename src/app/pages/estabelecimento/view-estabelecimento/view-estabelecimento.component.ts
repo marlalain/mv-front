@@ -1,9 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { Estabelecimento } from 'src/app/model/estabelecimento.model';
 import { EstabelecimentoService } from 'src/app/service/estabelecimento.service';
+import { ToastUtilService } from 'src/app/service/toast-util.service';
 
 @Component({
   selector: 'app-view-estabelecimento',
@@ -18,7 +18,7 @@ export class ViewEstabelecimentoComponent implements OnInit {
     private service: EstabelecimentoService,
     private route: ActivatedRoute,
     private location: Location,
-    private messageService: MessageService
+    private toastUtil: ToastUtilService
   ) {
     this.loading = true;
     this.estabelecimento = new Estabelecimento();
@@ -32,11 +32,7 @@ export class ViewEstabelecimentoComponent implements OnInit {
         this.estabelecimento = res;
       },
       (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: `Erro ${err.status}: ${err.error.error}`,
-          detail: err.error.message,
-        });
+        this.toastUtil.showError(err);
       }
     );
     this.loading = false;
