@@ -9,6 +9,19 @@
   (onLazyLoad)="lazyLoadProfissionais($event)"
   dataKey="id"
 >
+  <ng-template pTemplate="caption">
+    <div class="d-flex">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          (input)="filter($event)"
+          placeholder="Pesquisar por nome..."
+        />
+      </span>
+    </div>
+  </ng-template>
   <ng-template pTemplate="header">
     <tr>
       <th>Nome</th>

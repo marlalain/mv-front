@@ -19,10 +19,13 @@ export class ProfissionalService {
 
   public getProfissionais(
     page?: number,
-    size?: number
+    size?: number,
+    nome?: string
   ): Observable<Page<Profissional>> {
     return this.http.get<Page<Profissional>>(
-      `${this.API_URL}?page=${page ? page : `0`}&size=${size ? size : ''}`
+      `${this.API_URL}?page=${page ? page : `0`}&size=${
+        size ? size : '10'
+      }&nome=${nome ? nome : ''}`
     );
   }
 

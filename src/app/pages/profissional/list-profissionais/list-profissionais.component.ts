@@ -26,14 +26,19 @@ export class ListProfissionaisComponent implements OnInit {
     this.loading = true;
   }
 
+  filter(event: any) {
+    this.loading = true;
+    this.fetchProfissionais(undefined, undefined, event.data);
+  }
+
   lazyLoadProfissionais(event: LazyLoadEvent) {
     this.loading = true;
     let page = event.first! / this.rows;
     this.fetchProfissionais(page, event.rows);
   }
 
-  fetchProfissionais(page?: number, size: number = this.rows) {
-    this.service.getProfissionais(page, size).subscribe(
+  fetchProfissionais(page?: number, size: number = this.rows, nome?: string) {
+    this.service.getProfissionais(page, size, nome).subscribe(
       (res: Page<Profissional>) => {
         this.profissionais = res.content;
         this.totalRecords = res.totalElements;
