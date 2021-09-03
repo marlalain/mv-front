@@ -19,10 +19,13 @@ export class EstabelecimentoService {
 
   public getEstabelecimentos(
     page?: number,
-    size?: number
+    size?: number,
+    nome?: string
   ): Observable<Page<Estabelecimento>> {
     return this.http.get<Page<Estabelecimento>>(
-      `${this.API_URL}?page=${page ? page : `0`}&size=${size ? size : ''}`
+      `${this.API_URL}?page=${page ? page : `0`}&size=${
+        size ? size : '10'
+      }&nome=${nome ? nome : ''}`
     );
   }
 
