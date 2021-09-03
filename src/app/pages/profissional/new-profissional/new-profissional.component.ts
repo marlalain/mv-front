@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Estabelecimento } from 'src/app/model/estabelecimento.model';
 import { Profissional } from 'src/app/model/profissional.model';
 import { EstabelecimentoService } from 'src/app/service/estabelecimento.service';
 import { ProfissionalService } from 'src/app/service/profissional.service';
@@ -44,6 +45,7 @@ export class NewProfissionalComponent implements OnInit {
     this.estabelecimentoService.getEstabelecimentos().subscribe(
       (res) => {
         this.estabelecimentos = res.content;
+        this.loading = false;
       },
       (err: any) => {
         this.toastUtil.showError(err);
@@ -51,8 +53,17 @@ export class NewProfissionalComponent implements OnInit {
     );
   }
 
+  setEstabelecimentos() {
+    (this.profissionalForm.value.estabelecimentos as number[]).map((id) => {
+      this.selectedEstabelecimentos.push(new Estabelecimento(id));
+    });
+    this.profissionalForm.patchValue({
+      estabelecimentos: this.selectedEstabelecimentos,
+    });
+  }
+
   onSubmit() {
-    console.log(this.profissionalForm.value.funcao);
+    this.setEstabelecimentos();
     let profissional: Profissional = this.profissionalForm.value;
     profissional = {
       ...profissional,
@@ -67,8 +78,7 @@ export class NewProfissionalComponent implements OnInit {
         residencial: this.profissionalForm.value.residencial,
       },
     };
-    console.log(profissional.funcao);
-    this.service.updateProfissional(profissional).subscribe(
+    this.service.createProfissional(profissional).subscribe(
       () => {
         this.toastUtil.showSuccess(
           'Sucesso',

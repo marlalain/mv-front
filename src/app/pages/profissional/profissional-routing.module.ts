@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NewEstabelecimentoComponent } from '../estabelecimento/new-estabelecimento/new-estabelecimento.component';
 import { EditProfissionalComponent } from './edit-profissional/edit-profissional.component';
 import { ListProfissionaisComponent } from './list-profissionais/list-profissionais.component';
+import { NewProfissionalComponent } from './new-profissional/new-profissional.component';
 import { ViewProfissionalComponent } from './view-profissional/view-profissional.component';
 
 const routes: Routes = [
@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'new',
-    component: NewEstabelecimentoComponent,
+    component: NewProfissionalComponent,
   },
 ];
 

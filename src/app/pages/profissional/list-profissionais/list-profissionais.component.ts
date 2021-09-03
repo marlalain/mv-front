@@ -46,6 +46,10 @@ export class ListProfissionaisComponent implements OnInit {
     );
   }
 
+  newProfissional() {
+    this.router.navigateByUrl('profissionais/new');
+  }
+
   viewProfissional(profissional: Profissional) {
     this.router.navigateByUrl(`profissionais/view/${profissional.id}`);
   }
