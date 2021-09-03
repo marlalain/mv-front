@@ -14,7 +14,7 @@
       <th>Nome</th>
       <th>Telefone</th>
       <th>Endereço</th>
-      <th style="width: 12em">Ações</th>
+      <th style="width: 12em; text-align: center">Ações</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-estabelecimento>
@@ -37,18 +37,14 @@
         <button
           pButton
           icon="pi pi-pencil"
-          class="
-            p-button-outlined p-button-text p-button-success p-button-rounded
-          "
+          class=" p-button-outlined p-button-text p-button-success p-button-rounded"
           alt="Editar"
           (click)="editEstabelecimento(estabelecimento)"
         ></button>
         <button
           pButton
           icon="pi pi-trash"
-          class="
-            p-button-outlined p-button-text p-button-danger p-button-rounded
-          "
+          class=" p-button-outlined p-button-text p-button-danger p-button-rounded"
           alt="Deletar"
           (click)="deleteEstabelecimento(estabelecimento)"
         ></button>

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LazyLoadEvent } from 'primeng/api';
 import { Estabelecimento } from 'src/app/model/estabelecimento.model';
 import { EstabelecimentoService } from 'src/app/service/estabelecimento.service';
+import { ToastUtilService } from 'src/app/service/toast-util.service';
 
 @Component({
   selector: 'app-list-estabelecimentos',
@@ -15,7 +16,11 @@ export class ListEstabelecimentosComponent implements OnInit {
   rows = 10;
   loading: boolean;
 
-  constructor(private service: EstabelecimentoService, private router: Router) {
+  constructor(
+    private service: EstabelecimentoService,
+    private router: Router,
+    private toastUtil: ToastUtilService
+  ) {
     this.loading = true;
     this.fetchEstabelecimentos();
   }
@@ -29,13 +34,17 @@ export class ListEstabelecimentosComponent implements OnInit {
   }
 
   fetchEstabelecimentos(page?: number, size: number = this.rows): void {
-    this.service.getEstabelecimentos(page, size).subscribe((res) => {
-      this.estabelecimentos = res.content;
-      this.totalRecords = res.totalElements;
-      console.log(this.estabelecimentos, this.totalRecords);
-      console.log(res.totalPages);
-      this.loading = false;
-    });
+    this.service.getEstabelecimentos(page, size).subscribe(
+      (res) => {
+        this.estabelecimentos = res.content;
+        this.totalRecords = res.totalElements;
+        this.rows = res.size;
+        this.loading = false;
+      },
+      (err) => {
+        this.toastUtil.showError(err);
+      }
+    );
   }
 
   viewEstabelecimento(estabelecimento: Estabelecimento) {
