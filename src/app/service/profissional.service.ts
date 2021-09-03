@@ -13,6 +13,10 @@ export class ProfissionalService {
 
   constructor(private http: HttpClient) {}
 
+  public createProfissional(profissional: Profissional) {
+    return this.http.post(this.API_URL, profissional);
+  }
+
   public getProfissionais(
     page?: number,
     size?: number
