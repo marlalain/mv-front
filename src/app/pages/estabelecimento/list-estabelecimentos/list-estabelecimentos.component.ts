@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { Estabelecimento } from 'src/app/model/estabelecimento.model';
 import { EstabelecimentoService } from 'src/app/service/estabelecimento.service';
 import { ToastUtilService } from 'src/app/service/toast-util.service';
@@ -19,7 +19,8 @@ export class ListEstabelecimentosComponent implements OnInit {
   constructor(
     private service: EstabelecimentoService,
     private router: Router,
-    private toastUtil: ToastUtilService
+    private toastUtil: ToastUtilService,
+    private confirmationService: ConfirmationService
   ) {
     this.loading = true;
     this.fetchEstabelecimentos();
@@ -56,8 +57,17 @@ export class ListEstabelecimentosComponent implements OnInit {
   }
 
   deleteEstabelecimento(estabelecimento: Estabelecimento) {
-    this.service
-      .deleteEstabelecimento(estabelecimento)
-      .subscribe(() => this.fetchEstabelecimentos());
+    this.confirmationService.confirm({
+      message: `Do you really wish to delete ${estabelecimento.nome}?`,
+      accept: () => {
+        this.service.deleteEstabelecimento(estabelecimento).subscribe(() => {
+          this.fetchEstabelecimentos();
+          this.toastUtil.showWarn(
+            'Deletado',
+            `${estabelecimento.nome} foi deletado.`
+          );
+        });
+      },
+    });
   }
 }

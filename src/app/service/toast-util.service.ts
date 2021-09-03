@@ -20,4 +20,12 @@ export class ToastUtilService {
           detail: err.error.message,
         });
   }
+
+  showWarn(summary: string, detail: string) {
+    this.service.add({
+      severity: 'warn',
+      summary: summary,
+      detail: detail,
+    });
+  }
 }
