@@ -60,12 +60,19 @@ export class ListProfissionaisComponent implements OnInit {
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {
-        this.service.deleteProfissional(profissional).subscribe(() => {
-          this.toastUtil.showWarn(
-            'Deletado',
-            `${profissional.nome} foi deletado.`
-          );
-        });
+        this.service.deleteProfissional(profissional).subscribe(
+          () => {
+            this.fetchProfissionais();
+            this.toastUtil.showWarn(
+              'Deletado',
+              `${profissional.nome} foi deletado.`
+            );
+          },
+          (err) => {
+            this.fetchProfissionais();
+            this.toastUtil.showError(err);
+          }
+        );
       },
     });
   }

@@ -62,13 +62,19 @@ export class ListEstabelecimentosComponent implements OnInit {
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {
-        this.service.deleteEstabelecimento(estabelecimento).subscribe(() => {
-          this.fetchEstabelecimentos();
-          this.toastUtil.showWarn(
-            'Deletado',
-            `${estabelecimento.nome} foi deletado.`
-          );
-        });
+        this.service.deleteEstabelecimento(estabelecimento).subscribe(
+          () => {
+            this.fetchEstabelecimentos();
+            this.toastUtil.showWarn(
+              'Deletado',
+              `${estabelecimento.nome} foi deletado.`
+            );
+          },
+          (err) => {
+            this.fetchEstabelecimentos();
+            this.toastUtil.showError(err);
+          }
+        );
       },
     });
   }
