@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { Table } from 'primeng/table';
 import { Estabelecimento } from 'src/app/model/estabelecimento.model';
 import { EstabelecimentoService } from 'src/app/service/estabelecimento.service';
 import { ToastUtilService } from 'src/app/service/toast-util.service';
@@ -16,7 +15,6 @@ export class ListEstabelecimentosComponent implements OnInit {
   totalRecords = 0;
   rows = 10;
   loading: boolean;
-  filterNome: string;
 
   constructor(
     private service: EstabelecimentoService,
@@ -26,7 +24,6 @@ export class ListEstabelecimentosComponent implements OnInit {
   ) {
     this.loading = true;
     this.fetchEstabelecimentos();
-    this.filterNome = '';
   }
 
   ngOnInit(): void {}
