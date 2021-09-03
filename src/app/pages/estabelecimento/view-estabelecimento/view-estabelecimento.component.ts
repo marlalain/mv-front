@@ -1,6 +1,5 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Estabelecimento } from 'src/app/model/estabelecimento.model';
 import { EstabelecimentoService } from 'src/app/service/estabelecimento.service';
 import { ToastUtilService } from 'src/app/service/toast-util.service';
@@ -17,7 +16,7 @@ export class ViewEstabelecimentoComponent implements OnInit {
   constructor(
     private service: EstabelecimentoService,
     private route: ActivatedRoute,
-    private location: Location,
+    private router: Router,
     private toastUtil: ToastUtilService
   ) {
     this.loading = true;
@@ -39,7 +38,7 @@ export class ViewEstabelecimentoComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back();
+    this.router.navigateByUrl('estabelecimentos');
   }
 
   ngOnInit(): void {}

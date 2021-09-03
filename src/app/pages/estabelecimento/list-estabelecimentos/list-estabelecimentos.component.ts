@@ -58,7 +58,9 @@ export class ListEstabelecimentosComponent implements OnInit {
 
   deleteEstabelecimento(estabelecimento: Estabelecimento) {
     this.confirmationService.confirm({
-      message: `Do you really wish to delete ${estabelecimento.nome}?`,
+      message: `Você quer mesmo deletar o estabelecimento "${estabelecimento.nome}"?`,
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
       accept: () => {
         this.service.deleteEstabelecimento(estabelecimento).subscribe(() => {
           this.fetchEstabelecimentos();

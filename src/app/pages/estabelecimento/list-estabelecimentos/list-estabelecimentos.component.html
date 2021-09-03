@@ -22,9 +22,9 @@
       <td>{{ estabelecimento.nome }}</td>
       <td>{{ estabelecimento.telefone }}</td>
       <td>
-        {{ estabelecimento.endereco.bairro }} /
-        {{ estabelecimento.endereco.rua }} /
-        {{ estabelecimento.endereco.numero }}
+        {{ estabelecimento.endereco?.bairro! }} /
+        {{ estabelecimento.endereco?.rua! }} /
+        {{ estabelecimento.endereco?.numero! }}
       </td>
       <td>
         <button
