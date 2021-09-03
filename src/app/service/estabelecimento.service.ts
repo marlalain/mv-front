@@ -13,6 +13,10 @@ export class EstabelecimentoService {
 
   constructor(private http: HttpClient) {}
 
+  public createEstabelecimento(estabelecimento: Estabelecimento) {
+    return this.http.post(this.API_URL, estabelecimento);
+  }
+
   public getEstabelecimentos(
     page?: number,
     size?: number
