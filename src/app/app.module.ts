@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { EstabelecimentoModule } from './pages/estabelecimento/estabelecimento.module';
+import { ProfissionalModule } from './pages/profissional/profissional.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { EstabelecimentoModule } from './pages/estabelecimento/estabelecimento.m
     HttpClientModule,
     SharedModule,
     EstabelecimentoModule,
+    ProfissionalModule,
     BrowserAnimationsModule,
   ],
   providers: [],

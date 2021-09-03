@@ -1,1 +1,59 @@
-<p>list-profissionais works!</p>
+<p-table
+  [value]="profissionais"
+  [rowHover]="true"
+  [paginator]="true"
+  [totalRecords]="totalRecords"
+  [rows]="rows"
+  [loading]="loading"
+  [lazy]="true"
+  (onLazyLoad)="lazyLoadProfissionais($event)"
+  dataKey="id"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome</th>
+      <th>Função</th>
+      <th>Telefone</th>
+      <th>Endereço</th>
+      <th style="width: 12em">Ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-profissional>
+    <tr>
+      <td>{{ profissional.nome }}</td>
+      <td>{{ profissional.funcao }}</td>
+      <td>
+        {{ profissional.numero.celular }} /
+        {{ profissional.numero.residencial }}
+      </td>
+      <td>
+        {{ profissional.endereco?.bairro! }} /
+        {{ profissional.endereco?.rua! }} /
+        {{ profissional.endereco?.numero! }}
+      </td>
+      <td>
+        <button
+          pButton
+          icon="pi pi-search"
+          class="p-button-outlined p-button-text p-button-rounded"
+          alt="Ver"
+          (click)="viewProfissional(profissional)"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-pencil"
+          class=" p-button-outlined p-button-text p-button-success p-button-rounded"
+          alt="Editar"
+          (click)="editProfissional(profissional)"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-trash"
+          class=" p-button-outlined p-button-text p-button-danger p-button-rounded"
+          alt="Deletar"
+          (click)="deleteProfissional(profissional)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
