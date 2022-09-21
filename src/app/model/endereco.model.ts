@@ -1,7 +1,5 @@
-export class Endereco {
-  constructor(
-    public rua?: string,
-    public numero?: number,
-    public bairro?: string
-  ) {}
-}
+export type Endereco = {
+  rua?: string;
+  numero?: number;
+  bairro?: string;
+};
