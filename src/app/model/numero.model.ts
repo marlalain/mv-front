@@ -1,3 +1,4 @@
-export class Numero {
-  constructor(public residencial?: string, public celular?: string) {}
-}
+export type Numero = {
+  residencial?: string;
+  celular?: string;
+};
