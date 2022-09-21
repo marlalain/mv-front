@@ -44,7 +44,7 @@ export class NewProfissionalComponent implements OnInit {
   async fillEstabelecimentos() {
     try {
       this.estabelecimentos = (
-        await this.estabelecimentoService.getEstabelecimentos()
+        await this.estabelecimentoService.findPages()
       ).content;
     } catch (error) {
       this.toastUtil.showError(error);
@@ -80,7 +80,7 @@ export class NewProfissionalComponent implements OnInit {
     };
 
     try {
-      await this.service.createProfissional(profissional);
+      await this.service.create(profissional);
       this.toastUtil.showSuccess('Sucesso', 'Profissional criado com sucesso.');
       this.goBack();
     } catch (error) {

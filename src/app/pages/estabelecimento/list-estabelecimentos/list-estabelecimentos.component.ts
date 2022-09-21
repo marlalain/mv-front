@@ -45,7 +45,7 @@ export class ListEstabelecimentosComponent implements OnInit {
     nome?: string
   ): Promise<void> {
     try {
-      const res = await this.service.getEstabelecimentos(page, size, nome);
+      const res = await this.service.findPages(page, size, nome);
       this.estabelecimentos = res.content;
       this.totalRecords = res.totalElements;
       this.rows = res.size;
@@ -76,7 +76,7 @@ export class ListEstabelecimentosComponent implements OnInit {
       rejectLabel: 'Não',
       accept: async () => {
         try {
-          await this.service.deleteEstabelecimento(estabelecimento);
+          await this.service.delete(estabelecimento);
           this.toastUtil.showWarn(
             'Deletado',
             `${estabelecimento.nome} foi deletado.`

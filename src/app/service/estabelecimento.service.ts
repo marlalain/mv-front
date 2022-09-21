@@ -13,11 +13,11 @@ export class EstabelecimentoService {
 
   constructor(private http: HttpClient) {}
 
-  public createEstabelecimento(estabelecimento: Estabelecimento) {
+  public create(estabelecimento: Estabelecimento) {
     return this.http.post(this.API_URL, estabelecimento).toPromise();
   }
 
-  public getEstabelecimentos(
+  public findPages(
     page?: number,
     size?: number,
     nome?: string
@@ -31,18 +31,18 @@ export class EstabelecimentoService {
       .toPromise();
   }
 
-  public getEstabelecimentoById(id: number) {
+  public findById(id: number) {
     return this.http.get(`${this.API_URL}/${id}`).toPromise();
   }
 
-  public deleteEstabelecimento(estabelecimento: Estabelecimento) {
+  public delete(estabelecimento: Estabelecimento) {
     // utilizando os links do HATEOAS
     return this.http
       .delete(this.unwrapLink(estabelecimento.links!, 'delete'))
       .toPromise();
   }
 
-  public updateEstabelecimento(estabelecimento: Estabelecimento) {
+  public update(estabelecimento: Estabelecimento) {
     // fazendo os requests normalmente
     return this.http
       .put(`${this.API_URL}/${estabelecimento.id}`, estabelecimento)

@@ -28,7 +28,7 @@ export class ViewEstabelecimentoComponent implements OnInit {
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
 
     try {
-      this.estabelecimento = await this.service.getEstabelecimentoById(id);
+      this.estabelecimento = await this.service.findById(id);
     } catch (error) {
       this.toastUtil.showError(error);
     } finally {

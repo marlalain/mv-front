@@ -42,7 +42,7 @@ export class NewEstabelecimentoComponent implements OnInit {
     };
 
     try {
-      await this.service.createEstabelecimento(estabelecimento);
+      await this.service.create(estabelecimento);
       this.toastUtil.showSuccess(
         'Sucesso',
         'Estabelecimento criado com sucesso.'

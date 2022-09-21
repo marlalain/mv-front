@@ -38,8 +38,8 @@ export class EditEstabelecimentoComponent implements OnInit {
     const id: number = this.getIdFromUrl();
 
     try {
-      const estabelecimento = await this.service.getEstabelecimentoById(id);
-      this.setFormFromEstabelecimento(estabelecimento);
+      const estabelecimento = await this.service.findById(id);
+      this.setForm(estabelecimento);
     } catch (error) {
       this.toastUtil.showError(error);
     } finally {

@@ -47,7 +47,7 @@ export class EditProfissionalComponent implements OnInit {
     const id: number = this.getIdFromUrl();
 
     try {
-      this.profissional = await this.service.getProfissionalById(id);
+      this.profissional = await this.service.findById(id);
       this.setFormFromEstabelecimento(this.profissional);
     } catch (error) {
       this.toastUtil.showError(error);
@@ -72,7 +72,7 @@ export class EditProfissionalComponent implements OnInit {
   async fillEstabelecimentos() {
     try {
       this.estabelecimentos = (
-        await this.estabelecimentoService.getEstabelecimentos()
+        await this.estabelecimentoService.findPages()
       ).content;
     } catch (error) {
       this.toastUtil.showError(error);
@@ -112,7 +112,7 @@ export class EditProfissionalComponent implements OnInit {
     };
 
     try {
-      this.service.updateProfissional(profissional);
+      this.service.update(profissional);
       this.toastUtil.showSuccess('Sucesso', 'Profissional criado com sucesso.');
       this.goBack();
     } catch (error) {

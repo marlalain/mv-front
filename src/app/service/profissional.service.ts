@@ -13,11 +13,11 @@ export class ProfissionalService {
 
   constructor(private http: HttpClient) {}
 
-  public createProfissional(profissional: Profissional) {
+  public create(profissional: Profissional) {
     return this.http.post(this.API_URL, profissional).toPromise();
   }
 
-  public getProfissionais(
+  public findPages(
     page?: number,
     size?: number,
     nome?: string
@@ -31,18 +31,18 @@ export class ProfissionalService {
       .toPromise();
   }
 
-  public getProfissionalById(id: number): Promise<Profissional> {
+  public findById(id: number): Promise<Profissional> {
     return this.http.get(`${this.API_URL}/${id}`).toPromise();
   }
 
-  public deleteProfissional(profissional: Profissional) {
+  public delete(profissional: Profissional) {
     // utilizando os links do HATEOAS
     return this.http
       .delete(this.unwrapLink(profissional.links!, 'delete'))
       .toPromise();
   }
 
-  public updateProfissional(profissional: Profissional) {
+  public update(profissional: Profissional) {
     // fazendo os requests normalmente
     return this.http
       .put(`${this.API_URL}/${profissional.id}`, profissional)

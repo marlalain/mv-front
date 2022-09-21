@@ -43,7 +43,7 @@ export class ListProfissionaisComponent implements OnInit {
     nome?: string
   ) {
     try {
-      const { content, totalElements } = await this.service.getProfissionais(
+      const { content, totalElements } = await this.service.findPages(
         page,
         size,
         nome
@@ -77,7 +77,7 @@ export class ListProfissionaisComponent implements OnInit {
       rejectLabel: 'Não',
       accept: async () => {
         try {
-          await this.service.deleteProfissional(profissional);
+          await this.service.delete(profissional);
           this.toastUtil.showWarn(
             'Deletado',
             `${profissional.nome} foi deletado.`
