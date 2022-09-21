@@ -31,25 +31,26 @@ export class NewEstabelecimentoComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    let estabelecimento: Estabelecimento = this.estabelecimentoForm.value;
-    estabelecimento.endereco = {
-      rua: this.estabelecimentoForm.value.rua,
-      bairro: this.estabelecimentoForm.value.bairro,
-      numero: this.estabelecimentoForm.value.numero,
-    };
-    this.service.createEstabelecimento(estabelecimento).subscribe(
-      () => {
-        this.toastUtil.showSuccess(
-          'Sucesso',
-          'Estabelecimento criado com sucesso.'
-        );
-        this.goBack();
+  async onSubmit() {
+    let estabelecimento: Estabelecimento = {
+      ...this.estabelecimentoForm.value,
+      endereco: {
+        rua: this.estabelecimentoForm.value.rua,
+        bairro: this.estabelecimentoForm.value.bairro,
+        numero: this.estabelecimentoForm.value.numero,
       },
-      (err) => {
-        this.toastUtil.showError(err);
-      }
-    );
+    };
+
+    try {
+      await this.service.createEstabelecimento(estabelecimento);
+      this.toastUtil.showSuccess(
+        'Sucesso',
+        'Estabelecimento criado com sucesso.'
+      );
+      this.goBack();
+    } catch (error) {
+      this.toastUtil.showError(error);
+    }
   }
 
   goBack() {

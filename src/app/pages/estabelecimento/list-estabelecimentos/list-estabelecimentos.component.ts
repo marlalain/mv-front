@@ -39,22 +39,22 @@ export class ListEstabelecimentosComponent implements OnInit {
     this.fetchEstabelecimentos(page, event.rows);
   }
 
-  fetchEstabelecimentos(
+  async fetchEstabelecimentos(
     page?: number,
     size: number = this.rows,
     nome?: string
-  ): void {
-    this.service.getEstabelecimentos(page, size, nome).subscribe(
-      (res) => {
-        this.estabelecimentos = res.content;
-        this.totalRecords = res.totalElements;
-        this.rows = res.size;
-        this.loading = false;
-      },
-      (err) => {
-        this.toastUtil.showError(err);
-      }
-    );
+  ): Promise<void> {
+    try {
+      const res = await this.service.getEstabelecimentos(page, size, nome);
+      this.estabelecimentos = res.content;
+      this.totalRecords = res.totalElements;
+      this.rows = res.size;
+      this.loading = false;
+    } catch (error) {
+      this.toastUtil.showError(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   newEstabelecimento() {
@@ -74,20 +74,18 @@ export class ListEstabelecimentosComponent implements OnInit {
       message: `Você quer mesmo deletar o estabelecimento "${estabelecimento.nome}"?`,
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
-      accept: () => {
-        this.service.deleteEstabelecimento(estabelecimento).subscribe(
-          () => {
-            this.fetchEstabelecimentos();
-            this.toastUtil.showWarn(
-              'Deletado',
-              `${estabelecimento.nome} foi deletado.`
-            );
-          },
-          (err) => {
-            this.fetchEstabelecimentos();
-            this.toastUtil.showError(err);
-          }
-        );
+      accept: async () => {
+        try {
+          await this.service.deleteEstabelecimento(estabelecimento);
+          this.toastUtil.showWarn(
+            'Deletado',
+            `${estabelecimento.nome} foi deletado.`
+          );
+          await this.fetchEstabelecimentos();
+        } catch (error) {
+          this.toastUtil.showError(error);
+          await this.fetchEstabelecimentos();
+        }
       },
     });
   }

@@ -24,17 +24,16 @@ export class ViewEstabelecimentoComponent implements OnInit {
     this.setEstabelecimentoByUrlParam();
   }
 
-  setEstabelecimentoByUrlParam() {
+  async setEstabelecimentoByUrlParam() {
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
-    this.service.getEstabelecimentoById(id).subscribe(
-      (res) => {
-        this.estabelecimento = res;
-      },
-      (err) => {
-        this.toastUtil.showError(err);
-      }
-    );
-    this.loading = false;
+
+    try {
+      this.estabelecimento = await this.service.getEstabelecimentoById(id);
+    } catch (error) {
+      this.toastUtil.showError(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   goBack() {

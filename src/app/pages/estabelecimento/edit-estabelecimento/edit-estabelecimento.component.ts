@@ -36,15 +36,15 @@ export class EditEstabelecimentoComponent implements OnInit {
 
   async setEstabelecimentoByUrlParam() {
     const id: number = this.getIdFromUrl();
-    this.service.getEstabelecimentoById(id).subscribe(
-      (res) => {
-        this.setFormFromEstabelecimento(res);
-      },
-      (err) => {
-        this.toastUtil.showError(err);
-      }
-    );
-    this.loading = false;
+
+    try {
+      const estabelecimento = await this.service.getEstabelecimentoById(id);
+      this.setFormFromEstabelecimento(estabelecimento);
+    } catch (error) {
+      this.toastUtil.showError(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   setFormFromEstabelecimento(estabelecimento: Estabelecimento) {
@@ -61,7 +61,7 @@ export class EditEstabelecimentoComponent implements OnInit {
     return Number(this.route.snapshot.paramMap.get('id'));
   }
 
-  onSubmit() {
+  async onSubmit() {
     let estabelecimento: Estabelecimento = this.estabelecimentoForm.value;
     estabelecimento.id = this.getIdFromUrl();
     estabelecimento.endereco = {
@@ -69,18 +69,16 @@ export class EditEstabelecimentoComponent implements OnInit {
       bairro: this.estabelecimentoForm.value.bairro,
       numero: this.estabelecimentoForm.value.numero,
     };
-    this.service.updateEstabelecimento(estabelecimento).subscribe(
-      () => {
-        this.toastUtil.showSuccess(
-          'Sucesso',
-          'Estabelecimento editado com sucesso.'
-        );
-        this.goBack();
-      },
-      (err) => {
-        this.toastUtil.showError(err);
-      }
-    );
+    try {
+      await this.service.updateEstabelecimento(estabelecimento);
+      this.toastUtil.showSuccess(
+        'Sucesso',
+        'Estabelecimento editado com sucesso.'
+      );
+      this.goBack();
+    } catch (error) {
+      this.toastUtil.showError(error);
+    }
   }
 
   goBack() {
