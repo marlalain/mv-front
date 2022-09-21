@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   constructor() {
     this.items = [
       {
-        label: 'MV',
+        label: 'CRUD',
         url: '/',
       },
       {
