@@ -20,7 +20,7 @@ export class ViewProfissionalComponent implements OnInit {
     private toastUtil: ToastUtilService
   ) {
     this.loading = true;
-    this.profissional = new Profissional();
+    this.profissional = {};
     this.setProfissionalByUrlParam();
   }
 

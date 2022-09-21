@@ -26,7 +26,7 @@ export class NewProfissionalComponent implements OnInit {
     private toastUtil: ToastUtilService
   ) {
     this.loading = true;
-    this.profissional = new Profissional();
+    this.profissional = {};
     this.profissionalForm = new FormGroup({
       nome: new FormControl(''),
       funcao: new FormControl(''),
