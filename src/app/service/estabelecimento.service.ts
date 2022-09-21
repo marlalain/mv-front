@@ -14,36 +14,39 @@ export class EstabelecimentoService {
   constructor(private http: HttpClient) {}
 
   public createEstabelecimento(estabelecimento: Estabelecimento) {
-    return this.http.post(this.API_URL, estabelecimento);
+    return this.http.post(this.API_URL, estabelecimento).toPromise();
   }
 
   public getEstabelecimentos(
     page?: number,
     size?: number,
     nome?: string
-  ): Observable<Page<Estabelecimento>> {
-    return this.http.get<Page<Estabelecimento>>(
-      `${this.API_URL}?page=${page ? page : `0`}&size=${
-        size ? size : '10'
-      }&nome=${nome ? nome : ''}`
-    );
+  ): Promise<Page<Estabelecimento>> {
+    return this.http
+      .get<Page<Estabelecimento>>(
+        `${this.API_URL}?page=${page ? page : `0`}&size=${
+          size ? size : '10'
+        }&nome=${nome ? nome : ''}`
+      )
+      .toPromise();
   }
 
   public getEstabelecimentoById(id: number) {
-    return this.http.get(`${this.API_URL}/${id}`);
+    return this.http.get(`${this.API_URL}/${id}`).toPromise();
   }
 
   public deleteEstabelecimento(estabelecimento: Estabelecimento) {
     // utilizando os links do HATEOAS
-    return this.http.delete(this.unwrapLink(estabelecimento.links!, 'delete'));
+    return this.http
+      .delete(this.unwrapLink(estabelecimento.links!, 'delete'))
+      .toPromise();
   }
 
   public updateEstabelecimento(estabelecimento: Estabelecimento) {
     // fazendo os requests normalmente
-    return this.http.put(
-      `${this.API_URL}/${estabelecimento.id}`,
-      estabelecimento
-    );
+    return this.http
+      .put(`${this.API_URL}/${estabelecimento.id}`, estabelecimento)
+      .toPromise();
   }
 
   unwrapLink(links: Link[], rel: string): string {
