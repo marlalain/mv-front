@@ -24,17 +24,16 @@ export class ViewProfissionalComponent implements OnInit {
     this.setProfissionalByUrlParam();
   }
 
-  setProfissionalByUrlParam() {
+  async setProfissionalByUrlParam() {
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
-    this.service.getProfissionalById(id).subscribe(
-      (res) => {
-        this.profissional = res;
-      },
-      (err) => {
-        this.toastUtil.showError(err);
-      }
-    );
-    this.loading = false;
+
+    try {
+      this.profissional = await this.service.getProfissionalById(id);
+    } catch (error) {
+      this.toastUtil.showError(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   goBack() {

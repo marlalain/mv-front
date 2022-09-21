@@ -26,29 +26,36 @@ export class ListProfissionaisComponent implements OnInit {
     this.loading = true;
   }
 
-  filter(event: any) {
+  async filter(event: any) {
     this.loading = true;
-    this.fetchProfissionais(undefined, undefined, event.data);
+    await this.fetchProfissionais(undefined, undefined, event.data);
   }
 
-  lazyLoadProfissionais(event: LazyLoadEvent) {
+  async lazyLoadProfissionais(event: LazyLoadEvent) {
     this.loading = true;
     let page = event.first! / this.rows;
-    this.fetchProfissionais(page, event.rows);
+    await this.fetchProfissionais(page, event.rows);
   }
 
-  fetchProfissionais(page?: number, size: number = this.rows, nome?: string) {
-    this.service.getProfissionais(page, size, nome).subscribe(
-      (res: Page<Profissional>) => {
-        this.profissionais = res.content;
-        this.totalRecords = res.totalElements;
-        this.rows = res.size;
-        this.loading = false;
-      },
-      (err) => {
-        this.toastUtil.showError(err);
-      }
-    );
+  async fetchProfissionais(
+    page?: number,
+    size: number = this.rows,
+    nome?: string
+  ) {
+    try {
+      const { content, totalElements } = await this.service.getProfissionais(
+        page,
+        size,
+        nome
+      );
+      this.profissionais = content;
+      this.totalRecords = totalElements;
+      this.rows = size;
+    } catch (error) {
+      this.toastUtil.showError(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   newProfissional() {
@@ -68,20 +75,19 @@ export class ListProfissionaisComponent implements OnInit {
       message: `Você quer mesmo deletar o profissional "${profissional.nome}"?`,
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
-      accept: () => {
-        this.service.deleteProfissional(profissional).subscribe(
-          () => {
-            this.fetchProfissionais();
-            this.toastUtil.showWarn(
-              'Deletado',
-              `${profissional.nome} foi deletado.`
-            );
-          },
-          (err) => {
-            this.fetchProfissionais();
-            this.toastUtil.showError(err);
-          }
-        );
+      accept: async () => {
+        try {
+          await this.service.deleteProfissional(profissional);
+          this.toastUtil.showWarn(
+            'Deletado',
+            `${profissional.nome} foi deletado.`
+          );
+          await this.fetchProfissionais();
+        } catch (error) {
+          this.toastUtil.showError(error);
+        } finally {
+          this.loading = false;
+        }
       },
     });
   }

@@ -41,16 +41,16 @@ export class NewProfissionalComponent implements OnInit {
     this.fillEstabelecimentos();
   }
 
-  fillEstabelecimentos() {
-    this.estabelecimentoService.getEstabelecimentos().subscribe(
-      (res) => {
-        this.estabelecimentos = res.content;
-        this.loading = false;
-      },
-      (err: any) => {
-        this.toastUtil.showError(err);
-      }
-    );
+  async fillEstabelecimentos() {
+    try {
+      this.estabelecimentos = (
+        await this.estabelecimentoService.getEstabelecimentos()
+      ).content;
+    } catch (error) {
+      this.toastUtil.showError(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   setEstabelecimentos() {
@@ -64,12 +64,10 @@ export class NewProfissionalComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.setEstabelecimentos();
-    let profissional: Profissional = this.profissionalForm.value;
-    profissional = {
-      ...profissional,
-      funcao: this.profissionalForm.value.funcao,
+    let profissional: Profissional = {
+      ...this.profissionalForm.value,
       endereco: {
         rua: this.profissionalForm.value.rua,
         bairro: this.profissionalForm.value.bairro,
@@ -80,18 +78,14 @@ export class NewProfissionalComponent implements OnInit {
         residencial: this.profissionalForm.value.residencial,
       },
     };
-    this.service.createProfissional(profissional).subscribe(
-      () => {
-        this.toastUtil.showSuccess(
-          'Sucesso',
-          'Profissional criado com sucesso.'
-        );
-        this.goBack();
-      },
-      (err) => {
-        this.toastUtil.showError(err);
-      }
-    );
+
+    try {
+      await this.service.createProfissional(profissional);
+      this.toastUtil.showSuccess('Sucesso', 'Profissional criado com sucesso.');
+      this.goBack();
+    } catch (error) {
+      this.toastUtil.showError(error);
+    }
   }
 
   goBack() {

@@ -45,16 +45,15 @@ export class EditProfissionalComponent implements OnInit {
 
   async setProfissionalByUrlParam() {
     const id: number = this.getIdFromUrl();
-    this.service.getProfissionalById(id).subscribe(
-      (res: Profissional) => {
-        console.log(res);
-        this.setFormFromEstabelecimento(res);
-      },
-      (err: any) => {
-        this.toastUtil.showError(err);
-      }
-    );
-    this.loading = false;
+
+    try {
+      this.profissional = await this.service.getProfissionalById(id);
+      this.setFormFromEstabelecimento(this.profissional);
+    } catch (error) {
+      this.toastUtil.showError(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   setFormFromEstabelecimento(profissional: Profissional) {
@@ -70,15 +69,14 @@ export class EditProfissionalComponent implements OnInit {
     });
   }
 
-  fillEstabelecimentos() {
-    this.estabelecimentoService.getEstabelecimentos().subscribe(
-      (res) => {
-        this.estabelecimentos = res.content;
-      },
-      (err: any) => {
-        this.toastUtil.showError(err);
-      }
-    );
+  async fillEstabelecimentos() {
+    try {
+      this.estabelecimentos = (
+        await this.estabelecimentoService.getEstabelecimentos()
+      ).content;
+    } catch (error) {
+      this.toastUtil.showError(error);
+    }
   }
 
   getIdFromUrl(): number {
@@ -98,10 +96,8 @@ export class EditProfissionalComponent implements OnInit {
 
   onSubmit() {
     this.setEstabelecimentos();
-    console.log(this.profissionalForm.value.funcao);
-    let profissional: Profissional = this.profissionalForm.value;
-    profissional = {
-      ...profissional,
+    const profissional = {
+      ...this.profissionalForm.value,
       id: this.getIdFromUrl(),
       funcao: this.profissionalForm.value.funcao,
       endereco: {
@@ -114,19 +110,14 @@ export class EditProfissionalComponent implements OnInit {
         residencial: this.profissionalForm.value.residencial,
       },
     };
-    console.log(profissional.funcao);
-    this.service.updateProfissional(profissional).subscribe(
-      () => {
-        this.toastUtil.showSuccess(
-          'Sucesso',
-          'Profissional criado com sucesso.'
-        );
-        this.goBack();
-      },
-      (err) => {
-        this.toastUtil.showError(err);
-      }
-    );
+
+    try {
+      this.service.updateProfissional(profissional);
+      this.toastUtil.showSuccess('Sucesso', 'Profissional criado com sucesso.');
+      this.goBack();
+    } catch (error) {
+      this.toastUtil.showError(error);
+    }
   }
 
   goBack() {
