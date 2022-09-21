@@ -21,7 +21,7 @@ export class ListProfissionaisComponent implements OnInit {
     private router: Router,
     private confirmationService: ConfirmationService,
     private service: ProfissionalService,
-    private toastUtil: ToastUtilService
+    private toast: ToastUtilService
   ) {
     this.loading = true;
   }
@@ -52,7 +52,7 @@ export class ListProfissionaisComponent implements OnInit {
       this.totalRecords = totalElements;
       this.rows = size;
     } catch (error) {
-      this.toastUtil.showError(error);
+      this.toast.showError(error);
     } finally {
       this.loading = false;
     }
@@ -78,13 +78,10 @@ export class ListProfissionaisComponent implements OnInit {
       accept: async () => {
         try {
           await this.service.delete(profissional);
-          this.toastUtil.showWarn(
-            'Deletado',
-            `${profissional.nome} foi deletado.`
-          );
+          this.toast.showWarn('Deletado', `${profissional.nome} foi deletado.`);
           await this.fetchProfissionais();
         } catch (error) {
-          this.toastUtil.showError(error);
+          this.toast.showError(error);
         } finally {
           this.loading = false;
         }

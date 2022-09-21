@@ -17,7 +17,7 @@ export class ViewProfissionalComponent implements OnInit {
     private service: ProfissionalService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastUtil: ToastUtilService
+    private toast: ToastUtilService
   ) {
     this.loading = true;
     this.profissional = {};
@@ -30,7 +30,7 @@ export class ViewProfissionalComponent implements OnInit {
     try {
       this.profissional = await this.service.findById(id);
     } catch (error) {
-      this.toastUtil.showError(error);
+      this.toast.showError(error);
     } finally {
       this.loading = false;
     }

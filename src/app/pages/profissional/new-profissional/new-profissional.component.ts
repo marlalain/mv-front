@@ -23,7 +23,7 @@ export class NewProfissionalComponent implements OnInit {
     private router: Router,
     private estabelecimentoService: EstabelecimentoService,
     private service: ProfissionalService,
-    private toastUtil: ToastUtilService
+    private toast: ToastUtilService
   ) {
     this.loading = true;
     this.profissional = {};
@@ -47,7 +47,7 @@ export class NewProfissionalComponent implements OnInit {
         await this.estabelecimentoService.findPages()
       ).content;
     } catch (error) {
-      this.toastUtil.showError(error);
+      this.toast.showError(error);
     } finally {
       this.loading = false;
     }
@@ -81,10 +81,10 @@ export class NewProfissionalComponent implements OnInit {
 
     try {
       await this.service.create(profissional);
-      this.toastUtil.showSuccess('Sucesso', 'Profissional criado com sucesso.');
+      this.toast.showSuccess('Sucesso', 'Profissional criado com sucesso.');
       this.goBack();
     } catch (error) {
-      this.toastUtil.showError(error);
+      this.toast.showError(error);
     }
   }
 

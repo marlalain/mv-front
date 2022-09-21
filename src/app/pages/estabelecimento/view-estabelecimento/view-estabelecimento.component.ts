@@ -17,7 +17,7 @@ export class ViewEstabelecimentoComponent implements OnInit {
     private service: EstabelecimentoService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastUtil: ToastUtilService
+    private toast: ToastUtilService
   ) {
     this.loading = true;
     this.estabelecimento = {};
@@ -30,7 +30,7 @@ export class ViewEstabelecimentoComponent implements OnInit {
     try {
       this.estabelecimento = await this.service.findById(id);
     } catch (error) {
-      this.toastUtil.showError(error);
+      this.toast.showError(error);
     } finally {
       this.loading = false;
     }

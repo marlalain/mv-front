@@ -19,7 +19,7 @@ export class EditEstabelecimentoComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: EstabelecimentoService,
-    private toastUtil: ToastUtilService
+    private toast: ToastUtilService
   ) {
     this.loading = true;
     this.estabelecimento = {};
@@ -41,13 +41,13 @@ export class EditEstabelecimentoComponent implements OnInit {
       const estabelecimento = await this.service.findById(id);
       this.setForm(estabelecimento);
     } catch (error) {
-      this.toastUtil.showError(error);
+      this.toast.showError(error);
     } finally {
       this.loading = false;
     }
   }
 
-  setFormFromEstabelecimento(estabelecimento: Estabelecimento) {
+  setForm(estabelecimento: Estabelecimento) {
     this.estabelecimentoForm.patchValue({
       nome: estabelecimento.nome,
       telefone: estabelecimento.telefone,
@@ -69,15 +69,13 @@ export class EditEstabelecimentoComponent implements OnInit {
       bairro: this.estabelecimentoForm.value.bairro,
       numero: this.estabelecimentoForm.value.numero,
     };
+
     try {
-      await this.service.updateEstabelecimento(estabelecimento);
-      this.toastUtil.showSuccess(
-        'Sucesso',
-        'Estabelecimento editado com sucesso.'
-      );
+      await this.service.update(estabelecimento);
+      this.toast.showSuccess('Sucesso', 'Estabelecimento editado com sucesso.');
       this.goBack();
     } catch (error) {
-      this.toastUtil.showError(error);
+      this.toast.showError(error);
     }
   }
 

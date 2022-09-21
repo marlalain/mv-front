@@ -18,7 +18,7 @@ export class NewEstabelecimentoComponent implements OnInit {
   constructor(
     private router: Router,
     private service: EstabelecimentoService,
-    private toastUtil: ToastUtilService
+    private toast: ToastUtilService
   ) {
     this.loading = true;
     this.estabelecimento = {};
@@ -43,13 +43,10 @@ export class NewEstabelecimentoComponent implements OnInit {
 
     try {
       await this.service.create(estabelecimento);
-      this.toastUtil.showSuccess(
-        'Sucesso',
-        'Estabelecimento criado com sucesso.'
-      );
+      this.toast.showSuccess('Sucesso', 'Estabelecimento criado com sucesso.');
       this.goBack();
     } catch (error) {
-      this.toastUtil.showError(error);
+      this.toast.showError(error);
     }
   }
 

@@ -19,7 +19,7 @@ export class ListEstabelecimentosComponent implements OnInit {
   constructor(
     private service: EstabelecimentoService,
     private router: Router,
-    private toastUtil: ToastUtilService,
+    private toast: ToastUtilService,
     private confirmationService: ConfirmationService
   ) {
     this.loading = true;
@@ -51,7 +51,7 @@ export class ListEstabelecimentosComponent implements OnInit {
       this.rows = res.size;
       this.loading = false;
     } catch (error) {
-      this.toastUtil.showError(error);
+      this.toast.showError(error);
     } finally {
       this.loading = false;
     }
@@ -77,13 +77,13 @@ export class ListEstabelecimentosComponent implements OnInit {
       accept: async () => {
         try {
           await this.service.delete(estabelecimento);
-          this.toastUtil.showWarn(
+          this.toast.showWarn(
             'Deletado',
             `${estabelecimento.nome} foi deletado.`
           );
           await this.fetchEstabelecimentos();
         } catch (error) {
-          this.toastUtil.showError(error);
+          this.toast.showError(error);
           await this.fetchEstabelecimentos();
         }
       },
