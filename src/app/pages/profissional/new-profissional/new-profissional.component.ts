@@ -55,7 +55,9 @@ export class NewProfissionalComponent implements OnInit {
 
   setEstabelecimentos() {
     (this.profissionalForm.value.estabelecimentos as number[]).map((id) => {
-      this.selectedEstabelecimentos.push(new Estabelecimento(id));
+      this.selectedEstabelecimentos.push({
+        id,
+      });
     });
     this.profissionalForm.patchValue({
       estabelecimentos: this.selectedEstabelecimentos,

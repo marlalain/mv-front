@@ -20,7 +20,7 @@ export class ViewEstabelecimentoComponent implements OnInit {
     private toastUtil: ToastUtilService
   ) {
     this.loading = true;
-    this.estabelecimento = new Estabelecimento();
+    this.estabelecimento = {};
     this.setEstabelecimentoByUrlParam();
   }
 

@@ -22,7 +22,7 @@ export class EditEstabelecimentoComponent implements OnInit {
     private toastUtil: ToastUtilService
   ) {
     this.loading = true;
-    this.estabelecimento = new Estabelecimento();
+    this.estabelecimento = {};
     this.estabelecimentoForm = new FormGroup({
       nome: new FormControl(''),
       telefone: new FormControl(''),
